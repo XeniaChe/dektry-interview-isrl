@@ -25,11 +25,7 @@ function App() {
 
   return (
     <div className='App'>
-      <div
-        style={{
-          margin: '50px',
-        }}
-      >
+      <div className='Container'>
         {type === 'gallery' ? (
           <>
             <h4>Gallery view</h4>

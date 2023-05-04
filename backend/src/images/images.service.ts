@@ -2,13 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import axios from 'axios';
-import { /* Image, Photo, */ Response } from '../types';
+import { Response } from '../types';
 
 @Injectable()
 export class ImagesService {
-  /*   images: null | Image[] = null;
-  photos: null | Photo[] = null;
- */
   create(createImageDto: CreateImageDto) {
     return 'This action adds a new image';
   }

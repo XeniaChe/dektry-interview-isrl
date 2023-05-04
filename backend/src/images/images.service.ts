@@ -4,12 +4,6 @@ import { UpdateImageDto } from './dto/update-image.dto';
 import axios from 'axios';
 import { /* Image, Photo, */ Response } from '../types';
 
-const getAll = async (url) /* : Promise<Image[]> */ => {
-  const { data } = await axios.get(url);
-
-  return data[0];
-};
-
 @Injectable()
 export class ImagesService {
   /*   images: null | Image[] = null;
@@ -19,13 +13,19 @@ export class ImagesService {
     return 'This action adds a new image';
   }
 
+  async #getAll(url: string) {
+    const { data } = await axios.get(url);
+
+    return data[0];
+  }
+
   async findAll(): Promise<string | Response> {
     try {
-      const images = await getAll(
+      const images = await this.#getAll(
         'https://my-json-server.typicode.com/icedrone/json-demo-server/images',
       );
 
-      const photos = await getAll(
+      const photos = await this.#getAll(
         'https://my-json-server.typicode.com/icedrone/json-demo-server/photos',
       );
 

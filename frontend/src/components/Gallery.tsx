@@ -5,14 +5,14 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
     <div
       style={{
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         gap: '20px',
         margin: '50px',
       }}
     >
-      {images.map((image: Image, index: number) => (
+      {images.map((image: Image) => (
         <div key={image.id} style={{ flex: 1 }}>
-          <img src={image.url} alt='' style={{ width: '100%' }} />
+          <img src={image.url} alt={image.title} style={{ maxWidth: '100%' }} />
           <p>{image.title}</p>
         </div>
       ))}

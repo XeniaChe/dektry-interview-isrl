@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import axios from 'axios';
-import { Response } from '../types';
+import { Response, imagesUpdt } from '../types';
 
 @Injectable()
 export class ImagesService {
@@ -26,7 +26,19 @@ export class ImagesService {
         'https://my-json-server.typicode.com/icedrone/json-demo-server/photos',
       );
 
-      return { images, photos };
+      const imagesUpdt: imagesUpdt[] = images.map((img) => ({
+        id: img.id,
+        title: img.title,
+        url: img.path,
+      }));
+
+      const photosUpdt: imagesUpdt[] = photos.map((el) => ({
+        id: el.id,
+        title: el.title,
+        url: el.url,
+      }));
+
+      return [...imagesUpdt, ...photosUpdt];
     } catch (error) {
       console.error(error);
 

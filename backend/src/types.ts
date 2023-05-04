@@ -13,8 +13,11 @@ interface Photo {
   thumbnailUrl: string;
 }
 
-interface Response {
-  images: Image[];
-  photos: Photo[];
+interface imagesUpdt {
+  id: number;
+  title: string;
+  url: string;
 }
-export { Image, Photo, Response };
+type Response = imagesUpdt[];
+
+export { Image, Photo, Response, imagesUpdt };

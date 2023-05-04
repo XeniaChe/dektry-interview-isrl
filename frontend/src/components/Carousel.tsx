@@ -15,14 +15,22 @@ const Carousel: React.FC<GalleryProps> = ({ images }) => {
   };
 
   return (
-    <div>
-      <div>
-        <img src={images[currentIndex].url} alt={images[currentIndex].title} />
-      </div>
-      <div>
-        <button onClick={goToPrevSlide}>Prev</button>
-        <button onClick={goToNextSlide}>Next</button>
-      </div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '20px',
+        marginBottom: '50px',
+        alignItems: 'center',
+      }}
+    >
+      <button onClick={goToPrevSlide}>Prev</button>
+      <img
+        src={images[currentIndex].url}
+        alt={images[currentIndex].title}
+        style={{ maxWidth: '100%' }}
+      />
+      <button onClick={goToNextSlide}>Next</button>
     </div>
   );
 };

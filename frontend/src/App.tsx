@@ -19,20 +19,32 @@ function App() {
     getAll();
   }, []);
 
-  console.log({ images });
   const handleClick = (): void => {
     type === 'gallery' ? setType('carousel') : setType('gallery');
   };
 
   return (
     <div className='App'>
-      Hello
-      <button onClick={handleClick}>{type}</button>
-      {type === 'gallery' ? (
-        <Gallery images={images} />
-      ) : (
-        <Carousel images={images} />
-      )}
+      <div
+        style={{
+          margin: '50px',
+        }}
+      >
+        {type === 'gallery' ? (
+          <>
+            <h4>Gallery view</h4>
+            <Gallery images={images} />
+          </>
+        ) : (
+          <>
+            <h4>Carousel view</h4>
+            <Carousel images={images} />
+          </>
+        )}
+        <button onClick={handleClick}>
+          {type === 'gallery' ? 'Go to CAROUSEL view' : 'Go to GALLERY view'}
+        </button>
+      </div>
     </div>
   );
 }

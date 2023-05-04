@@ -2,15 +2,20 @@ import { Image, GalleryProps } from '../types';
 
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
   return (
-    <div>
-      <div>
-        {images.map((image: Image, index: number) => (
-          <div>
-            <img key={index} src={image.url} alt='' />
-            <p>{image.title}</p>
-          </div>
-        ))}
-      </div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        gap: '20px',
+        margin: '50px',
+      }}
+    >
+      {images.map((image: Image, index: number) => (
+        <div key={image.id} style={{ flex: 1 }}>
+          <img src={image.url} alt='' style={{ width: '100%' }} />
+          <p>{image.title}</p>
+        </div>
+      ))}
     </div>
   );
 };

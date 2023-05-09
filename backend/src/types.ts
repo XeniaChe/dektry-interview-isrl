@@ -1,14 +1,13 @@
-interface Image {
+interface Basic {
   albumId: number;
   id: number;
   title: string;
+}
+interface Image extends Basic {
   path: string;
 }
 
-interface Photo {
-  albumId: number;
-  id: number;
-  title: string;
+interface Photo extends Basic {
   url: string;
   thumbnailUrl: string;
 }

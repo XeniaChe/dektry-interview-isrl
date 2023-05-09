@@ -18,5 +18,6 @@ interface imagesUpdt {
   url: string;
 }
 type Response = imagesUpdt[];
+type RawResponse = Image[] | Photo[];
 
-export { Image, Photo, Response, imagesUpdt };
+export { Image, Photo, Response, imagesUpdt, RawResponse };

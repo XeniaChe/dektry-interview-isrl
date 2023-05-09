@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import axios from 'axios';
-import { Response, imagesUpdt } from '../types';
+import { imagesUpdt, Image, Photo, RawResponse } from '../types';
 
 @Injectable()
 export class ImagesService {
@@ -10,35 +10,38 @@ export class ImagesService {
     return 'This action adds a new image';
   }
 
-  async #getAll(url: string) {
-    const { data } = await axios.get(url);
+  async #getAllProm(url: string): Promise<string | RawResponse> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await axios.get(url);
 
-    return data[0];
+        resolve(data[0]);
+      } catch (error) {
+        reject(error.message);
+      }
+    });
   }
 
-  async findAll(): Promise<string | Response> {
+  async findAll(): Promise<string | imagesUpdt[]> {
     try {
-      const images = await this.#getAll(
-        'https://my-json-server.typicode.com/icedrone/json-demo-server/images',
-      );
+      const rawData: (string | RawResponse)[] = await Promise.all([
+        this.#getAllProm(
+          'https://my-json-server.typicode.com/icedrone/json-demo-server/images',
+        ),
+        this.#getAllProm(
+          'https://my-json-server.typicode.com/icedrone/json-demo-server/photos',
+        ),
+      ]);
 
-      const photos = await this.#getAll(
-        'https://my-json-server.typicode.com/icedrone/json-demo-server/photos',
-      );
+      const allData: imagesUpdt[] = rawData
+        .flat()
+        .map((el: Image | Photo): imagesUpdt => {
+          const url = 'path' in el ? el.path : el.url;
 
-      const imagesUpdt: imagesUpdt[] = images.map((img) => ({
-        id: img.id,
-        title: img.title,
-        url: img.path,
-      }));
+          return { id: el.id, title: el.title, url };
+        });
 
-      const photosUpdt: imagesUpdt[] = photos.map((el) => ({
-        id: el.id,
-        title: el.title,
-        url: el.url,
-      }));
-
-      return [...imagesUpdt, ...photosUpdt];
+      return allData;
     } catch (error) {
       console.error(error);
 

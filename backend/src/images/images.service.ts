@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  HttpException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 import axios from 'axios';
@@ -33,6 +38,12 @@ export class ImagesService {
         ),
       ]);
 
+      rawData[0] = [];
+      if (!rawData[0].length || !rawData[1].length)
+        throw new NotFoundException('Error while fetching images', {
+          cause: new Error("Couldn't fetch"),
+        });
+
       const allData: imagesUpdt[] = rawData
         .flat()
         .map((el: Image | Photo): imagesUpdt => {
@@ -45,7 +56,13 @@ export class ImagesService {
     } catch (error) {
       console.error(error);
 
-      return `Internal error: ${error.message}`;
+      throw new HttpException(
+        error.message || 'Custom error message',
+        HttpStatus.BAD_REQUEST,
+        {
+          cause: error.message,
+        },
+      );
     }
   }
 

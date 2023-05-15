@@ -12,7 +12,9 @@ import { imagesUpdt, Image, Photo, RawResponse } from '../types';
 @Injectable()
 export class ImagesService {
   create(createImageDto: CreateImageDto) {
-    return 'This action adds a new image';
+    // return 'This action adds a new image';
+
+    return createImageDto;
   }
 
   async #getAllProm(url: string): Promise<string | RawResponse> {
@@ -38,7 +40,6 @@ export class ImagesService {
         ),
       ]);
 
-      rawData[0] = [];
       if (!rawData[0].length || !rawData[1].length)
         throw new NotFoundException('Error while fetching images', {
           cause: new Error("Couldn't fetch"),
